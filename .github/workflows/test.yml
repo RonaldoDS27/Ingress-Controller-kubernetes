@@ -1,0 +1,23 @@
+name: SSH Connection and Ping
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install sshpass
+      run: sudo apt-get update && sudo apt-get install -y sshpass
+
+    - name: SSH Connection and Ping
+      env:
+        SSH_USER: ronaldo
+        SSH_PASSWORD: ronaldo
+        REMOTE_SERVER: tu_ip_o_nombre_de_servidor
+      run: |
+        sshpass -p $SSH_PASSWORD ssh $SSH_USER@$REMOTE_SERVER 'ping -c 4 google.com'
