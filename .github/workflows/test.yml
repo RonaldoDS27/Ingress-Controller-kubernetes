@@ -1,23 +1,29 @@
-name: SSH Connection and Ping
+name: Test Self-Hosted
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: 
 
 jobs:
-  deploy:
+  curl:
+    name: Curl
     runs-on: self-hosted
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Hacer una solicitud a Google
+        run: |
+          echo "Haciendo una solicitud a Google..."
+          curl https://www.google.com
 
-    - name: Install sshpass
-      run: sudo apt-get update && sudo apt-get install -y sshpass
+  job2:
+    name: Trabajo 2
+    runs-on: self-hosted
+    steps:
+      - name: Paso 1
+        run: echo "Este es el paso 1 del trabajo 3"
+      - name: Paso 2
+        run: echo "Este es el paso 2 del trabajo 3"
+      - name: Paso 3
+        run: echo "Este es el paso 3 del trabajo 3"
 
-    - name: SSH Connection and Ping
-      env:
-        SSH_USER: ronaldo
-        SSH_PASSWORD: ronaldo
-        REMOTE_SERVER: 192.168.101.5
-      run: |
-        sshpass -p $SSH_PASSWORD ssh $SSH_USER@$REMOTE_SERVER 'ping -c 4 google.com'
